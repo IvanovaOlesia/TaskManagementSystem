@@ -18,6 +18,7 @@ public class Task {
     private TaskPriority priority;
     private UUID creatorId;
     private UUID assigneeId;
+    @Builder.Default
     private List<Comment> comments = new ArrayList<>();
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;

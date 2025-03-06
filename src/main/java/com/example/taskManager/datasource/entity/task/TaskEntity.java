@@ -52,6 +52,7 @@ public class TaskEntity {
     private UserEntity assignee;
 
     @OneToMany(mappedBy = "task", cascade = CascadeType.ALL, orphanRemoval = true)
+    @Builder.Default
     private List<CommentEntity> comments = new ArrayList<>();
 
     @Column(nullable = false, updatable = false)

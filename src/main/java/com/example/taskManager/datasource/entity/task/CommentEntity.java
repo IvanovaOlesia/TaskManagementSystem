@@ -2,6 +2,7 @@ package com.example.taskManager.datasource.entity.task;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UuidGenerator;
 
 import java.time.LocalDateTime;
@@ -25,6 +26,7 @@ public class CommentEntity {
     private String content;
 
     @Column(name = "created_at")
+    @CreationTimestamp
     private LocalDateTime createdAt;
 
 }

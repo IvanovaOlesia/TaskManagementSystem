@@ -2,6 +2,7 @@ package com.example.taskManager.web.exception;
 
 import com.fasterxml.jackson.databind.exc.MismatchedInputException;
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.validation.ConstraintViolationException;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,7 +13,9 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
+import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
@@ -46,5 +49,15 @@ public class GlobalExceptionHandler {
         String errorMessage = String.format("Invalid argument: %s. Expected type: %s",
                 ex.getValue(), ex.getRequiredType().getSimpleName());
         return new ResponseEntity<>(errorMessage, HttpStatus.BAD_REQUEST);
+    }
+    @ExceptionHandler(ConstraintViolationException.class)
+    public ResponseEntity<AppError> handleConstraintViolation(ConstraintViolationException ex) {
+        List<String> errorMessages = ex.getConstraintViolations().stream()
+                .map(violation -> violation.getMessage())
+                .collect(Collectors.toList());
+
+        AppError response = new AppError(errorMessages);
+
+        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
 }

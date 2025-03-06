@@ -16,6 +16,7 @@ public class User {
     private UUID id;
     private String email;
     private String password;
+    @Builder.Default
     private Set<Role> roles = new HashSet<>();
     public User(String email, String password, Role role){
         this.email = email;

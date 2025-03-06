@@ -1,7 +1,9 @@
 package com.example.taskManager.web.mapper;
 
+import com.example.taskManager.datasource.entity.user.UserEntity;
 import com.example.taskManager.domain.Task;
 import com.example.taskManager.web.model.TaskDto;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 public class TaskDtoMapper {
     private TaskDtoMapper(){}
@@ -12,7 +14,7 @@ public static TaskDto toTaskDto(Task task){
             .priority(task.getPriority())
             .status(task.getStatus())
             .assigneeId(task.getAssigneeId())
-            .creatorId(task.getCreatorId())
+//            .creatorId(task.getCreatorId())
             .build();
 }
 public static Task toTaskDomain(TaskDto taskDto) {
@@ -22,7 +24,7 @@ public static Task toTaskDomain(TaskDto taskDto) {
             .priority(taskDto.getPriority())
             .status(taskDto.getStatus())
             .assigneeId(taskDto.getAssigneeId())
-            .creatorId(taskDto.getCreatorId())
+            .creatorId(((UserEntity) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getId())
             .build();
 }
 }

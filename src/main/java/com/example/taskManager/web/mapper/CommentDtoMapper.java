@@ -8,7 +8,7 @@ public class CommentDtoMapper {
     private CommentDtoMapper() {}
     public static Comment toDomain(CommentDto commentDto) {
         return Comment.builder()
-                .id(commentDto.getId())
+//                .id(commentDto.getId())
                 .task(commentDto.getTask())
                 .createdAt(commentDto.getCreatedAt())
                 .content(commentDto.getContent())
@@ -18,7 +18,7 @@ public class CommentDtoMapper {
     }
     public static CommentDto toDto(Comment comment) {
         return CommentDto.builder()
-                .id(comment.getId())
+//                .id(comment.getId())
                 .task(comment.getTask())
                 .createdAt(comment.getCreatedAt())
                 .content(comment.getContent())

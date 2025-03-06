@@ -56,8 +56,8 @@ private static  UserRepository userRepository;
                 .description(domain.getDescription())
                 .status(domain.getStatus())
                 .priority(domain.getPriority())
-                .creator(creator) // Сохраняем объект UserEntity
-                .assignee(assignee) // Сохраняем объект UserEntity
+                .creator(creator)
+                .assignee(assignee)
                 .comments(domain.getComments() != null ?
                         domain.getComments().stream().map(CommentEntityMapper::toEntity).collect(Collectors.toList()) :
                         new ArrayList<>())

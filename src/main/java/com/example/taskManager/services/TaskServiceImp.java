@@ -15,6 +15,7 @@ import com.example.taskManager.domain.exception.ForbiddenFieldException;
 import com.example.taskManager.domain.exception.TaskNotFoundException;
 import com.example.taskManager.domain.exception.UserNotFoundException;
 
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -37,6 +38,7 @@ public class TaskServiceImp implements TaskService {
     }
 
     @Override
+    @Transactional
     public List<Task> findTask() {
         return taskRepository.findAll().stream().map(TaskEntityMapper::toDomain).toList();
     }
@@ -107,6 +109,7 @@ public class TaskServiceImp implements TaskService {
     }
 
     @Override
+    @Transactional
     public void addComment(UUID taskId, Comment comment) {
         Task taskEntity =TaskEntityMapper.toDomain(taskRepository.findById(taskId)
                 .orElseThrow(() -> new TaskNotFoundException("Task not found")));
@@ -116,9 +119,7 @@ public class TaskServiceImp implements TaskService {
     }
 
 
-    // Метод для проверки, что только разрешенные поля обновляются
     private void validateUserFields(TaskEntity taskEntity, Task task) {
-        // Проверяем изменения недопустимых полей
         if (task.getTitle() != null && !task.getTitle().equals(taskEntity.getTitle())) {
             throw new ForbiddenFieldException("You are not allowed to change the title of the task.");
         }

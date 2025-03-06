@@ -37,8 +37,8 @@ public class SecurityConfig {
                                 .anyRequest().authenticated()
                 )
                 .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .addFilterBefore(authFilter, UsernamePasswordAuthenticationFilter.class)
-                .httpBasic(Customizer.withDefaults());
+                .addFilterBefore(authFilter, UsernamePasswordAuthenticationFilter.class);
+//                .httpBasic(Customizer.withDefaults());
         return httpSecurity.build();
 
     }
